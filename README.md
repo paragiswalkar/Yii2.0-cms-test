@@ -4,5 +4,8 @@
 </p>
 <p>
 Techinical Details
+<br>
 DB Name : yii2advanced
+<br>
+I have to use Adminlte theme extendion(hail812/yii2-adminlte3) for backend
 </p>
