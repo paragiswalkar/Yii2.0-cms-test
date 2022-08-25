@@ -63,7 +63,7 @@ class Subject extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'course_id' => 'Course',
+            'course_id' => 'Course ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

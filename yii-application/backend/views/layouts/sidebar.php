@@ -74,6 +74,7 @@
                     // ['label' => 'Informational', 'iconStyle' => 'far', 'iconClassAdded' => 'text-info'],
                     ['label' => 'View Courses', 'url' => ['/course'], 'iconStyle' => 'far'],
                     ['label' => 'View Subjects', 'url' => ['/subject'], 'iconStyle' => 'far'],
+                    ['label' => 'View Students', 'url' => ['/students'], 'iconStyle' => 'far'],
                 ],
             ]);
             ?>

@@ -8,15 +8,15 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Subjects';
+$this->title = 'Students';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="subject-index">
+<div class="students-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Subject', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Students', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -25,13 +25,25 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'name',
+            'firstname',
+            'lastname',
+            'mobile',
+            'email:email',
             [
-                'label' => 'Name',
+                'label' => 'Course',
                 'value' => 'course.title',
             ],
-            'created_at',
-            'updated_at',
+            [
+                'label' => 'Subject',
+                'value' => 'subject.name',
+            ],
+            //'address',
+            //'course_id',
+            //'avtar',
+            //'status',
+            //'created_at',
+            //'updated_at',
+            //'subject_id',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, $model, $key, $index, $column) {

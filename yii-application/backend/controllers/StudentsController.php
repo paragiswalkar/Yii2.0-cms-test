@@ -2,18 +2,19 @@
 
 namespace backend\controllers;
 
-use app\models\Subject;
+use app\models\Students;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use app\models\Course;
+use app\models\Subject;
 
 /**
- * SubjectController implements the CRUD actions for Subject model.
+ * StudentsController implements the CRUD actions for Students model.
  */
-class SubjectController extends Controller
+class StudentsController extends Controller
 {
     /**
      * @inheritDoc
@@ -34,14 +35,14 @@ class SubjectController extends Controller
     }
 
     /**
-     * Lists all Subject models.
+     * Lists all Students models.
      *
      * @return string
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Subject::find()->joinWith(['course']),
+            'query' => Students::find(),
             'pagination' => [
                 'pageSize' => 5
             ],
@@ -51,14 +52,14 @@ class SubjectController extends Controller
                 ]
             ],
         ]);
-        
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Subject model.
+     * Displays a single Students model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -71,14 +72,15 @@ class SubjectController extends Controller
     }
 
     /**
-     * Creates a new Subject model.
+     * Creates a new Students model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Subject();
+        $model = new Students();
         $items = ArrayHelper::map(Course::find()->all(), 'id', 'title');
+        $subjectitems = ArrayHelper::map(Subject::find()->all(), 'id', 'name');
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -87,15 +89,16 @@ class SubjectController extends Controller
         } else {
             $model->loadDefaultValues();
         }
-        
+
         return $this->render('create', [
             'model' => $model,
             'items' => $items,
+            'subjectitems' => $subjectitems
         ]);
     }
 
     /**
-     * Updates an existing Subject model.
+     * Updates an existing Students model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -105,6 +108,7 @@ class SubjectController extends Controller
     {
         $model = $this->findModel($id);
         $items = ArrayHelper::map(Course::find()->all(), 'id', 'title');
+        $subjectitems = ArrayHelper::map(Subject::find()->all(), 'id', 'name');
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -113,11 +117,12 @@ class SubjectController extends Controller
         return $this->render('update', [
             'model' => $model,
             'items' => $items,
+            'subjectitems' => $subjectitems
         ]);
     }
 
     /**
-     * Deletes an existing Subject model.
+     * Deletes an existing Students model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -131,15 +136,15 @@ class SubjectController extends Controller
     }
 
     /**
-     * Finds the Subject model based on its primary key value.
+     * Finds the Students model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Subject the loaded model
+     * @return Students the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Subject::findOne(['id' => $id])) !== null) {
+        if (($model = Students::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
