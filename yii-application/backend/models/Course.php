@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "course".
@@ -25,14 +26,30 @@ class Course extends \yii\db\ActiveRecord
         return 'course';
     }
 
+    public function behaviors() {
+        parent::behaviors();
+
+        return [
+          'timestamp' => [
+            'class' => TimestampBehavior::className(),
+            'attributes' => [
+                \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at']
+            ],
+            'value' => date('Y-m-d H:i:s'),
+          ]
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['title', 'created_at', 'updated_at'], 'required'],
-            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['title','status'], 'required'],
+            [['status'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255],
         ];
     }
