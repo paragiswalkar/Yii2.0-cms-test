@@ -3,42 +3,32 @@
 namespace app\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "subject".
+ * This is the model class for table "students".
  *
  * @property int $id
- * @property string $name
+ * @property string $firstname
+ * @property string $lastname
+ * @property int|null $mobile
+ * @property string|null $email
+ * @property string|null $address
  * @property int $course_id
+ * @property string|null $avtar
+ * @property int $status
  * @property int $created_at
  * @property int $updated_at
  *
  * @property Course $course
  */
-class Subject extends \yii\db\ActiveRecord
+class Students extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'subject';
-    }
-
-    public function behaviors() {
-        parent::behaviors();
-
-        return [
-          'timestamp' => [
-            'class' => TimestampBehavior::className(),
-            'attributes' => [
-                \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at']
-            ],
-            'value' => date('Y-m-d H:i:s'),
-          ]
-        ];
+        return 'students';
     }
 
     /**
@@ -47,10 +37,11 @@ class Subject extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'course_id'], 'required'],
-            [['course_id'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['name'], 'string', 'max' => 255],
+            [['firstname', 'lastname', 'course_id', 'created_at', 'updated_at'], 'required'],
+            [['mobile', 'course_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['firstname', 'lastname', 'email', 'address', 'avtar'], 'string', 'max' => 255],
+            [['mobile'], 'unique'],
+            [['email'], 'unique'],
             [['course_id'], 'exist', 'skipOnError' => true, 'targetClass' => Course::className(), 'targetAttribute' => ['course_id' => 'id']],
         ];
     }
@@ -62,8 +53,14 @@ class Subject extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'course_id' => 'Course',
+            'firstname' => 'Firstname',
+            'lastname' => 'Lastname',
+            'mobile' => 'Mobile',
+            'email' => 'Email',
+            'address' => 'Address',
+            'course_id' => 'Course ID',
+            'avtar' => 'Avtar',
+            'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
