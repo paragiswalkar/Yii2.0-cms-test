@@ -35,12 +35,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'mobile',
             'email:email',
             'address',
-            'course_id',
-            'avtar',
+            [
+                'attribute'=>'course_id',
+                'value'=> $model->course->title,
+            ],
+            [
+                'attribute'=>'subject_id',
+                'value'=> $model->subject->name,
+            ],
+            [
+                'attribute'=>'avtar',
+                'value'=>'/'.$model->avtar,
+                'format' => ['image',['width'=>'100','height'=>'100']],
+            ],
             'status',
             'created_at',
-            'updated_at',
-            'subject_id',
         ],
     ]) ?>
 
