@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use app\models\Course;
+use yii\helpers\Json;
 
 /**
  * SubjectController implements the CRUD actions for Subject model.
@@ -128,6 +129,26 @@ class SubjectController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionGetsubject() {
+        
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $sub_id = $parents[0];
+                $out = Subject::getSubjectList($sub_id); 
+                // the getSubCatList function will query the database based on the
+                // cat_id and return an array like below:
+                // [
+                //    ['id'=>'<sub-cat-id-1>', 'name'=>'<sub-cat-name1>'],
+                //    ['id'=>'<sub-cat_id_2>', 'name'=>'<sub-cat-name2>']
+                // ]
+                return json_encode(['output'=>$out, 'selected'=>'']);
+            }
+        }
+        return json_encode(['output'=>'', 'selected'=>'']);
     }
 
     /**
