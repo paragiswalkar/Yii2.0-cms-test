@@ -78,4 +78,14 @@ class Subject extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Course::className(), ['id' => 'course_id']);
     }
+
+    public function getSubjectList($sub_id) {
+        $subjectlist = self::find()
+                        ->select(['id','name'])
+                        ->where(['course_id' => $sub_id])
+                        ->asArray()
+                        ->all();
+
+        return $subjectlist;                
+    }
 }

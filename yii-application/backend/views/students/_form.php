@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
+use kartik\depdrop\DepDrop;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Students */
@@ -24,7 +26,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'course_id')->dropDownList($items,['prompt'=>'Select Course']) ?>
 
-    <?= $form->field($model, 'subject_id')->dropDownList($subjectitems,['prompt'=>'Select Subject']) ?>
+    <?= $form->field($model, 'subject_id')->widget(DepDrop::classname(), [
+        'pluginOptions'=>[
+            'depends'=>['students-course_id'],
+            'placeholder'=>'Select Subject',
+            'url'=>Url::to(['/subject/getsubject'])
+        ]
+    ]);?>
+
+    <!-- <?= $form->field($model, 'subject_id')->dropDownList($subjectitems,['prompt'=>'Select Subject']) ?> -->
 
     <?= $form->field($model, 'avtar')->textInput(['maxlength' => true]) ?>
 
